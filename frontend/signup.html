@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Circuify</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+            <span class="icon">♻️</span> Circuify
+        </a>
+        <div class="nav-buttons">
+            <a href="login.html"><button class="btn-secondary">Login</button></a>
+            <button class="btn-primary">Sign Up</button>
+        </div>
+    </header>
+    <main>
+        <section class="auth-section">
+            <div class="card auth-card">
+                <a href="index.html" class="back-link">&larr; Back to Diagon Alley</a>
+                <h2>Join the Order of Recyclers</h2>
+                <p style="text-align: center; color: #6b7280; margin-bottom: 1rem;">Let Circuify sort your materials to the right buyers!</p>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g. Hermione Granger">
+                    </div>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="e.g. h.granger@hogwarts.ac.uk">
+                    </div>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Choose a magical passkey">
+                    </div>
+                    <div class="auth-options" style="margin-top: 1rem; font-size: 0.9rem;">
+                        <label><input type="checkbox" required> I agree to the Magical Terms of Service.</label>
+                    </div>
+                    <p id="error-msg" style="color:red;font-size:0.875rem;margin-top:0.5rem;display:none;"></p>
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem;">Sign Up</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Log In</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Made with magic by Team Circuify for Hackathon 2024 - Mischief Managed!</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagon Alley | Circuify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard { display: grid; grid-template-columns: 250px 1fr; gap: 2rem; padding: 2rem; max-width: 1400px; margin: 0 auto; }
+        .sidebar { background: rgba(255,255,255,0.03); padding: 1.5rem; border: 1px solid rgba(217,178,75,0.15); border-radius: 0.5rem; height: fit-content; }
+        .sidebar h3 { margin-bottom: 1rem; border-bottom: 1px solid rgba(217,178,75,0.2); padding-bottom: 0.5rem; color: #D9B24B; }
+        .filter-group { margin-bottom: 1.5rem; }
+        .filter-group label { display: block; margin-bottom: 0.5rem; color: #D1D5DB; font-weight: 500; }
+        .filter-group select, .filter-group input { width: 100%; padding: 0.5rem; border: 1px solid rgba(217,178,75,0.3); border-radius: 0.25rem; background: rgba(0,0,0,0.2); color: #E5E7EB; }
+        .marketplace-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .listing-card { border: 1px solid rgba(217,178,75,0.15); border-radius: 0.5rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; background: rgba(255,255,255,0.03); transition: border-color 0.2s; }
+        .listing-card:hover { border-color: rgba(217,178,75,0.4); }
+        .listing-tag { background: rgba(217,178,75,0.15); color: #D9B24B; padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; width: fit-content; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 1.1rem; color: #D9B24B; margin-top: 0.5rem; }
+        .details-list { font-size: 0.875rem; color: #9CA3AF; list-style: none; }
+        .details-list li { margin-bottom: 0.25rem; display: flex; gap: 0.5rem; }
+        .cart-btn { position: relative; }
+        #cart-badge { background: #D9B24B; color: #0B1120; border-radius: 50%; padding: 0.1rem 0.4rem; font-size: 0.7rem; font-weight: bold; margin-left: 0.25rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><span class="icon">✨</span> Circuify</div>
+        <div class="nav-buttons">
+            <span style="margin-right: 1rem; font-weight: 500;" id="buyer-username">Ministry Buyer Portal</span>
+            <button class="btn-secondary cart-btn" onclick="window.location.href='cart.html'">
+                🛒 Holding Vault <span id="cart-badge" style="display:none">0</span>
+            </button>
+            <button class="btn-secondary" style="margin-left:0.5rem" onclick="window.location.href='role.html'">Switch Role</button>
+            <button class="btn-secondary" style="margin-left:0.5rem" onclick="logout()">Sign Out</button>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <aside class="sidebar">
+            <h3>✨ Sorting Hat Filters</h3>
+            <div class="filter-group">
+                <label>Waste Category</label>
+                <select id="filter-category">
+                    <option value="">All Categories</option>
+                    <option>Dragon Scale Metals</option>
+                    <option>Potion Residues</option>
+                    <option>Herbology Scraps</option>
+                    <option>Wizard Robes</option>
+                    <option>Parchment & Scrolls</option>
+                    <option>Muggle Artifacts</option>
+                    <option>Castle Stones</option>
+                    <option>Phoenix Ashes</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Quantity Minimum (Cauldrons)</label>
+                <input type="number" id="filter-qty" placeholder="e.g. 50">
+            </div>
+            <div class="filter-group">
+                <label>Location</label>
+                <input type="text" id="filter-location" placeholder="e.g. London">
+            </div>
+            <button class="btn-primary" style="width: 100%;" id="filter-btn">Cast Filter Charm</button>
+        </aside>
+
+        <section>
+            <h2 style="margin-bottom: 1.5rem; color: #F9FAFB;">Available Scrap Treasures</h2>
+            <div class="marketplace-grid" id="listings-grid">
+                <p style="color:#9CA3AF">Loading listings...</p>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
