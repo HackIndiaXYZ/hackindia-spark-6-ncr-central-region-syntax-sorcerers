@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holding Vault | Circuify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><span class="icon">✨</span> Circuify</div>
+        <div class="nav-buttons">
+            <span class="portal-label">Ministry Holding Vault</span>
+            <button class="btn-secondary" onclick="window.location.href='buyer.html'">Return to Alley</button>
+        </div>
+    </header>
+
+    <main class="cart-wrapper">
+        <h2 class="cart-header">Your Secured Materials</h2>
+        <div class="cart-panel">
+            <div id="cart-items"></div>
+            <div class="cart-summary" id="cart-total-container" style="display:none;">
+                <div class="cart-total-row">
+                    <span>Total Contract Value:</span>
+                    <span id="cart-total-price">0 G</span>
+                </div>
+                <div class="cart-actions">
+                    <button id="checkout-btn" class="btn-primary" style="padding: 1rem; font-size: 1.1rem;"
+                        onclick="window.location.href='checkout.html'">Proceed to Gringotts</button>
+                    <button class="btn-secondary" onclick="clearVault()">Empty Vault</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('circuify_cart')) || [];
+        const container = document.getElementById('cart-items');
+        let total = 0;
+
+        if (cart.length === 0) {
+            container.innerHTML = `
+                <div class="empty-vault">
+                    <div class="empty-vault-icon">🕸️</div>
+                    <h3>Your vault is currently empty.</h3>
+                    <p style="margin-top: 0.5rem;">Cast an Accio spell on some materials in the marketplace!</p>
+                </div>`;
+        } else {
+            cart.forEach(item => {
+                total += item.price;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="item-details">
+                            <h3>${item.name}</h3>
+                            <p>Pending Transfer</p>
+                        </div>
+                        <span class="cart-item-price">${item.price} G</span>
+                    </div>`;
+            });
+            document.getElementById('cart-total-container').style.display = 'flex';
+            document.getElementById('cart-total-price').innerText = total + ' Galleons';
+        }
+
+        function clearVault() {
+            localStorage.removeItem('circuify_cart');
+            location.reload();
+        }
+    </script>
+</body>
+</html>

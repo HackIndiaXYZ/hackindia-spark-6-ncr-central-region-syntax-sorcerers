@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault Analytics | Circuify</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-container { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+        .header-action { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background: white; padding: 1.5rem; border-radius: 0.5rem; border: 1px solid #e5e7eb; border-left: 4px solid #16a34a; }
+        .kpi-title { font-size: 0.875rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;}
+        .kpi-value { font-size: 2rem; font-weight: bold; color: #111827; }
+        .green-score { border-left-color: #059669; background: #ecfdf5; }
+        .dashboard-panels { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+        .panel { background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; }
+        .panel h3 { margin-bottom: 1rem; color: #374151; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;}
+        .data-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; }
+        .data-row:last-child { border-bottom: none; }
+        .status-badge { background: #dcfce7; color: #166534; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: bold; }
+        /* Modal */
+        .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; justify-content:center; align-items:center; }
+        .modal-overlay.open { display:flex; }
+        .modal { background:white; padding:2rem; border-radius:0.75rem; width:100%; max-width:480px; display:flex; flex-direction:column; gap:1rem; }
+        .modal h3 { margin-bottom:0.5rem; }
+        .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+        .form-group label { font-weight:500; font-size:0.9rem; color:#374151; }
+        .form-group input, .form-group select, .form-group textarea { padding:0.6rem 0.75rem; border:1px solid #d1d5db; border-radius:0.375rem; font-size:1rem; }
+        .modal-btns { display:flex; gap:1rem; justify-content:flex-end; margin-top:0.5rem; }
+    </style>
+</head>
+<body style="background-color: #f9fafb;">
+    <header style="background: white;">
+        <div class="logo"><span class="icon">♻️</span> Circuify</div>
+        <div class="nav-buttons">
+            <span style="margin-right: 1rem; font-weight: 500;" id="seller-username">Gringotts Seller Portal</span>
+            <button class="btn-secondary" onclick="window.location.href='role.html'">Use Floo Network (Switch Role)</button>
+            <button class="btn-secondary" style="margin-left:0.5rem" onclick="logout()">Sign Out</button>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <div class="header-action">
+            <h2>Magical Enterprise Analytics</h2>
+            <button class="btn-primary" id="new-listing-btn">+ Register New Byproduct</button>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">Total Listings</div>
+                <div class="kpi-value" id="kpi-total">—</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Active Listings</div>
+                <div class="kpi-value" id="kpi-active">—</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Total Quantity Listed</div>
+                <div class="kpi-value" id="kpi-qty">—</div>
+            </div>
+            <div class="kpi-card green-score">
+                <div class="kpi-title">🌿 Herbology Score</div>
+                <div class="kpi-value" style="color: #059669;">Outstanding (O)</div>
+            </div>
+        </div>
+
+        <div class="dashboard-panels">
+            <div class="panel">
+                <h3>Active Marketplace Charms</h3>
+                <div id="my-listings-container">
+                    <p style="color:#6b7280">Loading your listings...</p>
+                </div>
+            </div>
+            <div class="panel">
+                <h3>📬 Owl Post Inbox</h3>
+                <div id="inbox-container">
+                    <p style="color:#6b7280">Loading messages...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- New Listing Modal -->
+    <div class="modal-overlay" id="listing-modal">
+        <div class="modal">
+            <h3>Register New Byproduct</h3>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="m-title" placeholder="e.g. Welsh Green Scales">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="m-category">
+                    <option>Dragon Scale Metals</option>
+                    <option>Potion Residues</option>
+                    <option>Herbology Scraps</option>
+                    <option>Wizard Robes</option>
+                    <option>Parchment & Scrolls</option>
+                    <option>Muggle Artifacts</option>
+                    <option>Castle Stones</option>
+                    <option>Phoenix Ashes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="m-desc" rows="2" placeholder="Describe your material..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" id="m-qty" placeholder="e.g. 100">
+            </div>
+            <div class="form-group">
+                <label>Unit</label>
+                <input type="text" id="m-unit" placeholder="Cauldrons / Tonnes / Bundles" value="Cauldrons">
+            </div>
+            <div class="form-group">
+                <label>Price (Galleons)</label>
+                <input type="number" id="m-price" placeholder="e.g. 500">
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <input type="text" id="m-location" placeholder="e.g. Diagon Alley, London">
+            </div>
+            <p id="modal-error" style="color:red;font-size:0.875rem;display:none;"></p>
+            <div class="modal-btns">
+                <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn-primary" onclick="submitListing()">Create Listing</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

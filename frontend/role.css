@@ -1,0 +1,8 @@
+.role-section { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 2rem; }
+.role-container { max-width: 800px; width: 100%; text-align: center; }
+.role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+.role-card { padding: 3rem 2rem; border: 2px solid #e5e7eb; border-radius: 1rem; cursor: pointer; transition: all 0.3s ease; background: white; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.role-card:hover { border-color: #16a34a; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transform: translateY(-5px); }
+.role-icon { font-size: 3rem; }
+.role-card h3 { font-size: 1.5rem; color: #111827; }
+.role-card p { color: #6b7280; margin-bottom: 1rem; }
